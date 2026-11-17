@@ -1,26 +1,124 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-forest: #1e4433;
+  --color-moss: #2f6b4f;
+  --color-cream: #faf7f0;
+  --color-sage: #e6ede2;
+  --color-sage-200: #c8d6c3;
+  --color-sage-300: #b9cdb3;
+  --color-sage-400: #8fae8b;
+  --color-sage-500: #7e9a79;
+  --color-track: #eef2eb;
+  --color-mist: #f4f7f2;
+  --color-line: #dce5d7;
+  --color-amber: #e2a23b;
+  --color-amber-dark: #d4922c;
+  --color-amber-soft: #fbefd9;
+  --color-rust: #94570f;
+  --color-sand: #eadbc0;
+  --color-bark: #5c3a0a;
+  --color-ink: #2b3a31;
+  --color-ink-dark: #1e2a22;
+  --color-body: #3e5046;
+  --color-muted: #4e5e54;
+
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-jakarta), sans-serif;
+  --font-serif: Georgia, "Times New Roman", serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    margin: 0;
+    background: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 18px;
+    line-height: 1.6;
+  }
+
+  a {
+    color: var(--color-forest);
+  }
+  a:hover {
+    color: var(--color-moss);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-amber);
+    outline-offset: 3px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .navlink {
+    color: var(--color-forest);
+    text-decoration: none;
+  }
+  .navlink:hover {
+    color: var(--color-moss);
+    text-decoration: underline;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 16px rgba(30, 68, 51, 0.07);
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(30, 68, 51, 0.12);
+  }
+
+  .eyebrow {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-moss);
+  }
+
+  .label {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-moss);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: rise 0.7s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .rise {
+    animation: none;
+  }
+  .card,
+  .card:hover {
+    transition: none;
+    transform: none;
+  }
 }
