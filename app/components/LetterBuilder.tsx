@@ -2,21 +2,61 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const RECIPIENTS = [
-  "[Recipient Type 1]",
-  "[Recipient Type 2]",
-  "[Recipient Type 3]",
-];
-
-function buildLetter(recipient: string) {
-  return `Dear [Representative’s Name],
-
-[Letter draft goes here – ${recipient}]
-
-Sincerely,
+const SIGN_OFF = `Sincerely,
 [Your Name]
 [Your City/State]`;
-}
+
+const LETTERS = [
+  {
+    label: "Local Official",
+    body: `Dear [Council Member / Commissioner Name],
+
+I live in [Your City] and am writing about data center development in our community. Data centers can bring diesel generator emissions, round-the-clock noise, heavy water use and new grid costs, yet current rules tend to review these hazards one at a time.
+
+Before any new data center permit is approved, I urge you to:
+• Require a full environmental impact assessment
+• Set strict noise limits and caps on fresh water use
+• Require public reporting of emissions, energy, water use and tax breaks
+• Pause new construction until these safeguards are in place
+
+Our community deserves a say in what gets built here. Thank you for your time.
+
+${SIGN_OFF}`,
+  },
+  {
+    label: "Utility Regulator",
+    body: `Dear Commissioners,
+
+I am a residential utility customer in [Your City] writing about the cost of new grid infrastructure for data centers. AI data centers need enormous amounts of electricity, and the substations and transmission lines built to serve them are often paid for by everyday ratepayers rather than the companies that need them.
+
+I urge the Commission to:
+• Protect residential customers from data center grid upgrade costs
+• Create commercial tariffs so large data centers pay for their own power infrastructure
+• Ensure fair compensation and public review when eminent domain is used for these projects
+
+Thank you for standing up for residential customers.
+
+${SIGN_OFF}`,
+  },
+  {
+    label: "Tech Company",
+    body: `Dear [Company Name] Leadership,
+
+As a user of your products, I am concerned about how your data centers affect nearby communities, including air pollution from backup diesel generators, water drawn for cooling, and constant noise and light.
+
+I ask that you:
+• Publicly report Water Usage Effectiveness and Power Usage Effectiveness for every facility
+• Commit to 24/7 carbon-free energy instead of relying on carbon offsets
+• Invest in water-saving cooling and filtration
+• Site new facilities away from homes and sensitive habitats, and sign community benefit agreements where you build
+
+I will choose providers that take these steps.
+
+${SIGN_OFF}`,
+  },
+];
+
+const RECIPIENTS = LETTERS.map((l) => l.label);
 
 export default function LetterBuilder() {
   const [current, setCurrent] = useState(0);
@@ -30,7 +70,7 @@ export default function LetterBuilder() {
   }, []);
 
   const recipient = RECIPIENTS[current];
-  const letter = buildLetter(recipient);
+  const letter = LETTERS[current].body;
 
   async function copy() {
     try {
